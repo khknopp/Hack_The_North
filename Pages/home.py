@@ -1,4 +1,6 @@
+
 from taipy.gui import Gui, navigate
+
 home_md = """
 # <p style="text-align: center;">Welcome to EyeTracker!</p>
 ---
@@ -10,7 +12,7 @@ home_md = """
 ## 
 
 <center>
-<a href="http://127.0.0.1:5000/watching"><|Start|button|></a>
+<a href="watching"><|Start|button|></a>
 </center>
 
 
@@ -21,6 +23,3 @@ home_md = """
 
 """
 
-def on_menu(state, var_name, function_name, info):
-    page = info['args'][0]
-    navigate(state, to=page)
