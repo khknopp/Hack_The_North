@@ -29,3 +29,8 @@
     border: #0087ca 0.2em solid;
     cursor: pointer;
   }
+
+  .shadow_fx {
+    box-shadow: 0.3em 0.3em 0.7em #00000015;
+    border-radius: .5rem;
+  }

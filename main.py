@@ -2,6 +2,7 @@ from taipy.gui import Gui, Html
 from Pages.about import about_md
 from Pages.home import home_md
 
+
 root_md = """
 <center>
 <|navbar|>
