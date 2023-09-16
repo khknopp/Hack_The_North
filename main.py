@@ -13,6 +13,8 @@ import cohere
 import psycopg
 from psycopg.errors import SerializationFailure, Error
 from psycopg.rows import namedtuple_row
+import pickle as pk
+from db import add_video
 
 
 load_dotenv()
@@ -35,17 +37,8 @@ root_md = """
 
 """
 
-
-def add_video(conn, link, summary):
-    with conn.cursor() as cur:
-        cur.execute(
-            "CREATE TABLE IF NOT EXISTS videos (link TEXT PRIMARY KEY, summary TEXT)"
-        )
-        cur.execute(
-            "INSERT INTO videos (link, summary) VALUES (%s, 50), (%s, 1000)", (link, summary))
-    print("Added succesfully")
         
-add_video(conn, "https://www.youtube.com/watch?v=9syvZr-9xwk", "This is a summary of the video")
+#add_video(conn, "9syvZr-9xwk", "This is a summary of the video", ["These are the closed questions"], ["These are the closed answers"], ["These are the open questions"], ["These are the open answers"], "This is the title", "This is the transcript")
 video_md = createMarkdown("https://www.youtube.com/watch?v=9syvZr-9xwk")
 pages = {
     "/": root_md,
@@ -107,3 +100,4 @@ if __name__ == "__main__":
 
 
 #print(all_outputs)
+conn.close()
