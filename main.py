@@ -1,8 +1,8 @@
-from taipy.gui import Gui, Html
+from taipy.gui import Gui, Html, navigate, notify
 from Pages.about import about_md
 from Pages.home import home_md
 from Pages.watching import watching_md
-from Pages.Philosophy import philosophy_md
+import Pages.Philosophy as phil
 import time
 
 generalNavigation = [("/home", "Home"), ("/about", "About"), ("/watching", "Watching")]
@@ -24,13 +24,15 @@ pages = {
     "home": home_md,
     "about": about_md,
     "watching": watching_md,
-    "watching/philosophy": philosophy_md,
+    "watching/philosophy": phil.createMarkdown("https://www.youtube.com/embed/tgbNymZ7vqY")
 }
 
 if __name__ == "__main__":
     initialOpen = 0
     lookedAwayStart = 0
     lookedAwayEnd = 0
+
+    urlLink = ""
 
     allIntervals = []
 
@@ -50,6 +52,10 @@ if __name__ == "__main__":
                 # Then mark this guy!
                 startEndLst = [state.lookedAwayStart, state.lookedAwayEnd]
                 allIntervals.append(startEndLst)
+
+    def on_menu(state, var_name, function_name, info):
+        page = info['args'][0]
+        navigate(state, to=page)
 
     Gui(pages=pages).run(title='NewApp', stylekit=stylekit, dark_mode=False)
 
