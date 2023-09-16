@@ -1,8 +1,8 @@
-from taipy.gui import Gui, Html
+from taipy.gui import Gui, Html, navigate, notify
 from Pages.about import about_md
 from Pages.home import home_md
 from Pages.watching import watching_md
-from Pages.Philosophy import philosophy_md
+from Pages.video import createMarkdown
 import time
 from video_utils import *
 from questionGenerator import *
@@ -10,13 +10,23 @@ from summarize import *
 from dotenv import load_dotenv
 import os
 import cohere
+import psycopg
+from psycopg.errors import SerializationFailure, Error
+from psycopg.rows import namedtuple_row
+
 
 load_dotenv()
 COHERE_API_KEY = os.getenv('COHERE_API_KEY')
+COCKROACH_USERNAME = os.getenv('COCKROACH_USERNAME')
+COCKROACH_PASSWORD = os.getenv('COCKROACH_PASSWORD')
+
 co = cohere.Client(COHERE_API_KEY)
+db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@vortex-jester-5487.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+
+conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
 
 generalNavigation = [("/home", "Home"), ("/about", "About"), ("/watching", "Watching")]
-watchingNavigation = [("/watching/philosophy", "Philosophy"), ("/watching/history", "History")]
+watchingNavigation = [("/watching/video", "Video"), ("/watching/history", "History")]
 
 root_md = """
 <center>
@@ -25,22 +35,32 @@ root_md = """
 
 """
 
-stylekit = {
-  "font_family": "Arial",
-}
 
+def add_video(conn, link, summary):
+    with conn.cursor() as cur:
+        cur.execute(
+            "CREATE TABLE IF NOT EXISTS videos (link TEXT PRIMARY KEY, summary TEXT)"
+        )
+        cur.execute(
+            "INSERT INTO videos (link, summary) VALUES (%s, 50), (%s, 1000)", (link, summary))
+    print("Added succesfully")
+        
+add_video(conn, "https://www.youtube.com/watch?v=9syvZr-9xwk", "This is a summary of the video")
+video_md = createMarkdown("https://www.youtube.com/watch?v=9syvZr-9xwk")
 pages = {
     "/": root_md,
     "home": home_md,
     "about": about_md,
     "watching": watching_md,
-    "watching/philosophy": philosophy_md,
+    "watching/video": video_md,
 }
 
 if __name__ == "__main__":
     initialOpen = 0
     lookedAwayStart = 0
     lookedAwayEnd = 0
+
+    urlLink = ""
 
     allIntervals = []
 
@@ -61,7 +81,11 @@ if __name__ == "__main__":
                 startEndLst = [state.lookedAwayStart, state.lookedAwayEnd]
                 allIntervals.append(startEndLst)
 
-    Gui(pages=pages).run(title='NewApp', stylekit=stylekit, dark_mode=False)
+    def on_menu(state, var_name, function_name, info):
+        page = info['args'][0]
+        navigate(state, to=page)
+
+    Gui(pages=pages).run(title='NewApp', dark_mode=False)
 
 
 # video = "9syvZr-9xwk"

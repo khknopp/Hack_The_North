@@ -1,5 +1,5 @@
 about_md = """
-<|{“image1.webp”}|image|height=250px|width=450px|on_action=image_action|class_name=“shadow_fx”|>
-<|{“image2.webp”}|image|height=250px|width=250px|on_action=image_action|>
-<|{“image3.png”}|image|height=250px|width=450px|on_action=image_action|>
+<|{"https://picsum.photos/id/237/536/354"}|image|height=250px|width=150px|class_name="shadow_fx"|>
+<|{"https://picsum.photos/id/237/536/354"}|image|height=250px|width=250px|>
+<|{"https://picsum.photos/id/237/536/354"}|image|height=250px|width=450px|>
 """
