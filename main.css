@@ -1,0 +1,31 @@
+.big-title {
+    font-family: Roboto;
+    text-align: left;
+  }
+  
+  .horizontal-align {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+  }
+  
+  .card {
+    width: 260px;
+    height: 260px;
+    background: #282828;
+    border-radius: 16em;
+    box-shadow: 0.3em 0.3em 0.7em #00000015;
+    transition: border 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: #2d2d2d 0.2em solid;
+  }
+  
+  .card p {
+    text-align: left;
+    padding: 0 1rem;
+  }
+  
+  .card:hover {
+    border: #0087ca 0.2em solid;
+    cursor: pointer;
+  }
