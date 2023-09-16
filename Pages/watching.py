@@ -5,4 +5,8 @@ watching_md = """
         frameborder="0"
         style="border: solid 4px #37474F"
 ></iframe>
+
+<h2>Demo JavaScript in Body</h2>
+
+<p id="demo">A Paragraph.</p>
 """
