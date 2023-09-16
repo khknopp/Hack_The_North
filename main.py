@@ -4,7 +4,7 @@ from math import cos, exp
 page = Html("""
 <style>
 body {
-	background: red;
+	background: white;
 }
 </style>
 <center>
