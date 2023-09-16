@@ -66,6 +66,8 @@ if __name__ == "__main__":
 
 # video = "9syvZr-9xwk"
 #video = "4XGGPfaTcSo"
+#video = "9syvZr-9xwk"
+# video = "4XGGPfaTcSo"
 
 #transcript, transcript_text = run_transcript(video)
 # overall_summary = " ".join(summarize_text(co, transcript_text))
@@ -75,6 +77,7 @@ if __name__ == "__main__":
 #get_questions(co, open, closed)
 
 #fragments = create_fragments(transcript, [[50, 100], [200, 230]])
+#fragments = create_fragments(transcript, [[50, 100], [200, 230], [200, 230]])
 
 #print(update_summary(co, summary, fragments))
 
