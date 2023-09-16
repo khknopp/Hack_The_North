@@ -10,8 +10,11 @@ co = cohere.Client(COHERE_API_KEY)
 # video = "9syvZr-9xwk"
 video = "4XGGPfaTcSo"
 
-transcript = run_transcript(video)
+transcript, transcript_text = run_transcript(video)
 
-all_outputs = split_execution(co, transcript)
+m, b, e = get_fragment(transcript, 30, 55)
+print(m,"$$$$$$$$$$$$", b, "$$$$$$$$$$$$$$$$", e)
 
-print(all_outputs)
+#all_outputs = split_execution(co, transcript_text)
+
+#print(all_outputs)
