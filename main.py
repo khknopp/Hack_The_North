@@ -16,14 +16,14 @@ from psycopg.rows import namedtuple_row
 
 
 load_dotenv()
-COHERE_API_KEY = 'yQeQE6Qb9HK8mjAOBxHM9paVtLBgf8Xaokr1RUOP'
-COCKROACH_USERNAME = 'htn'
-COCKROACH_PASSWORD = 'X4Vc6r3tQ8jngyPzLGgIdA'
+# COHERE_API_KEY = 'yQeQE6Qb9HK8mjAOBxHM9paVtLBgf8Xaokr1RUOP'
+# COCKROACH_USERNAME = 'htn'
+# COCKROACH_PASSWORD = 'X4Vc6r3tQ8jngyPzLGgIdA'
 
-co = cohere.Client(COHERE_API_KEY)
-db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@vortex-jester-5487.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+# co = cohere.Client(COHERE_API_KEY)
+# db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@vortex-jester-5487.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
 
-conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
+# conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
 
 generalNavigation = [("/home", "Home"), ("/about", "About"), ("/watching", "Watching")]
 watchingNavigation = [("/watching/video", "Video"), ("/watching/history", "History")]
@@ -36,17 +36,17 @@ root_md = """
 """
 
 
-def add_video(conn, link, summary):
-    with conn.cursor() as cur:
-        cur.execute(
-            "CREATE TABLE IF NOT EXISTS videos (link TEXT PRIMARY KEY, summary TEXT)"
-        )
-        cur.execute(
-            "INSERT INTO videos (link, summary) VALUES (%s, 50), (%s, 1000)", (link, summary))
-    print("Added succesfully")
+# def add_video(conn, link, summary):
+#     with conn.cursor() as cur:
+#         cur.execute(
+#             "CREATE TABLE IF NOT EXISTS videos (link TEXT PRIMARY KEY, summary TEXT)"
+#         )
+#         cur.execute(
+#             "INSERT INTO videos (link, summary) VALUES (%s, 50), (%s, 1000)", (link, summary))
+#     print("Added succesfully")
         
-add_video(conn, "https://www.youtube.com/watch?v=9syvZr-9xwk", "This is a summary of the video")
-video_md = createMarkdown("https://www.youtube.com/watch?v=9syvZr-9xwk")
+# add_video(conn, "https://www.youtube.com/watch?v=9syvZr-9xwk", "This is a summary of the video")
+video_md = createMarkdown("https://www.youtube.com/embed/9syvZr-9xwk")
 pages = {
     "/": root_md,
     "home": home_md,
