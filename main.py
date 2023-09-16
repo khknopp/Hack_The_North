@@ -1,4 +1,4 @@
-from taipy.gui import Gui, Html
+from taipy.gui import Gui, Html, navigate, notify
 from Pages.about import about_md
 from Pages.home import home_md
 from Pages.watching import watching_md
@@ -56,6 +56,8 @@ if __name__ == "__main__":
     lookedAwayStart = 0
     lookedAwayEnd = 0
 
+    urlLink = ""
+
     allIntervals = []
 
     isLookingAway = False
@@ -74,6 +76,10 @@ if __name__ == "__main__":
                 # Then mark this guy!
                 startEndLst = [state.lookedAwayStart, state.lookedAwayEnd]
                 allIntervals.append(startEndLst)
+
+    def on_menu(state, var_name, function_name, info):
+        page = info['args'][0]
+        navigate(state, to=page)
 
     Gui(pages=pages).run(title='NewApp', stylekit=stylekit, dark_mode=False)
 
