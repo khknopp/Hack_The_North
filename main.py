@@ -5,7 +5,7 @@ from Pages.watching import watching_md
 from Pages.video import createMarkdown
 import time
 from video_utils import *
-from questionGenerator import *
+from question_generator import *
 from summarize import *
 from dotenv import load_dotenv
 import os
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 #separate based on fullstops to get bullet points
 
 #open, closed, summary = split_execution(co, transcript_text)
-#get_questions(co, open, closed)
+#
 
 #fragments = create_fragments(transcript, [[50, 100], [200, 230]])
 #fragments = create_fragments(transcript, [[50, 100], [200, 230], [200, 230]])
