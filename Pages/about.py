@@ -1,15 +1,5 @@
 about_md = """
-<iframe id="existing-iframe-example"
-        width="640" height="360"
-        src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
-        frameborder="0"
-        style="border: solid 4px #37474F"
-></iframe>
+<|{“image1.webp”}|image|height=250px|width=450px|on_action=image_action|class_name=“shadow_fx”|>
+<|{“image2.webp”}|image|height=250px|width=250px|on_action=image_action|>
+<|{“image3.png”}|image|height=250px|width=450px|on_action=image_action|>
 """
-
-# <iframe id="existing-iframe-example"
-#         width="640" height="360"
-#         src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
-#         frameborder="0"
-#         style="border: solid 4px #37474F"
-# ></iframe>

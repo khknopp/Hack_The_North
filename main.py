@@ -2,14 +2,17 @@ from taipy.gui import Gui, Html
 from Pages.about import about_md
 from Pages.home import home_md
 from Pages.watching import watching_md
+from Pages.Philosophy import philosophy_md
 import time
 
-navigation = [("/home", "Home"), ("/about", "Expression")]
+generalNavigation = [("/home", "Home"), ("/about", "About"), ("/watching", "Watching")]
+watchingNavigation = [("/watching/philosophy", "Philosophy"), ("/watching/history", "History")]
 
 root_md = """
 <center>
-<|navbar|lov={navigation}|>
+<|navbar|lov={generalNavigation}|>
 </center>
+
 """
 
 stylekit = {
@@ -20,7 +23,8 @@ pages = {
     "/": root_md,
     "home": home_md,
     "about": about_md,
-    "watching": watching_md
+    "watching": watching_md,
+    "watching/philosophy": philosophy_md,
 }
 
 if __name__ == "__main__":
