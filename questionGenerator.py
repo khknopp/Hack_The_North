@@ -16,14 +16,14 @@ def generate_questions(co, text, number=5):
   return openEndedQuestions.generations[0].text, multipleChoiceQuestions.generations[0].text
 
 
-def check_question(co, question, proper_answer=""):
+def check_question(co, question):
   answer = co.generate(
     prompt='Act as a student and try to write a brief, but correct answer (such that the grading professor will definitely approve your answer) to the following question:' + question + ". If you do not have the context available to answer the question make sure to only write I do not know.",
     max_tokens=300,
     temperature=3.0
   )
   grader = co.generate(
-    prompt='Act as a university professor grading a students work and be very strict knowing the content of your course and all information available to you as a professor in the field. Specifically make sure to check if the answer is logical, creative and could be written by a student without external context. If a student answers that they do not know, automatically fail the answer. Be sure that if you think the question is not useful to a student learning about your specialized field (especially if it is below the level of a graduate student, too general or too repetetive), fail the answer. Otherwise, write either Pass or Fail depending on whether you would accept the following answer:' + answer.generations[0].text + 'to the question:' + question,
+    prompt='Act as a university professor grading a students work and knowing the content of your course and all information available to you as a professor in the field. Specifically make sure to check if the answer is logical, creative and could be written by a student without external context. If a student answers that they do not know, automatically fail the answer. Be sure that if you think the question is not useful to a student learning about your specialized field (especially if it is below the level of a graduate student, too general or too repetetive), fail the answer. Otherwise, write either Pass or Fail depending on whether you would accept the following answer:' + answer.generations[0].text + 'to the question:' + question,
     max_tokens=5,
     temperature=0.0
   )
@@ -35,6 +35,27 @@ def check_question(co, question, proper_answer=""):
     return True
   else:
     return False
+  
+def get_questions(co, open, closed):
+  open = open[0].split("\n")
+  closed = closed[0].split("\n")
+
+  final_open = []
+  final_closed = []
+  answers_closed = []
+
+  for question in open:
+    if(check_question(co, question)):
+      final_open.append(question)
+
+  index = 0
+  print(closed)
+  while(index<len(closed)):
+    if(check_question(co, closed[index])):
+      final_closed.append(closed[index])
+      answers_closed.append(closed[index+1])
+    index += 2
+  return final_open, final_closed, answers_closed
 
 def split_execution(co, whole_text):
   n = 2000
