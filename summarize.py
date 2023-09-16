@@ -21,7 +21,7 @@ def summarize_highlighted(co, highlighted):
 
 def combine_summaries(co, overallSummary, highlightedSummary):
     combinedSummary = co.generate(
-        prompt="This is the overall summary:" + overallSummary + "\n This is the detailed summary of sections that we want emphasized:" + highlightedSummary + "Combine these summaries by removing any repeated sections and without paraphrasing the text",
+        prompt="This is the overall summary:" + overallSummary + "\n This is the detailed summary of sections that we want emphasized:" + highlightedSummary + "Combine these summaries by removing any repeated sections and without paraphrasing the text. Write asterisks around the emphasized sections.",
         max_tokens=1000
     )
     return combinedSummary.generations[0].text
@@ -41,6 +41,8 @@ def update_summary(co, overall_summary, unfocused_fragments):
 
   highlighted_summary = " ".join(highlighted_summary[0])
 
+  overall_summary = " ".join(overall_summary[0])
+
   combined_summary = combine_summaries(co, overall_summary, highlighted_summary)
-  
+
   return combined_summary
