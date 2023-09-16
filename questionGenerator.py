@@ -1,4 +1,3 @@
-import cohere
 from summarize import summarize_text
 # import transcription from transcription.py
 
