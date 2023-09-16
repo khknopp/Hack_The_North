@@ -2,10 +2,18 @@ from taipy.gui import Gui, Html
 from math import cos, exp 
 
 page = Html("""
-<h1>Page title</h1>
-
-Any <a href="https://en.wikipedia.org/wiki/HTML"><i>HTML</i></a>
-content can be used here.
+<style>
+body {
+	background: red;
+}
+</style>
+<center>
+<h1>Project title goes here</h1>
+</center>
+<h1>What subject do you want to learn?</h1>
+<button>Math</button>
+<button>Physics</button>
+<button>Chemistry</button>
 """)
 
 # def print_link(decay):
@@ -17,5 +25,4 @@ content can be used here.
 
 #data = print_link(decay) 
 
-Gui(page=page).run(title='SmarTranscribe',
-    		       dark_mode=True)
+Gui(page=page).run(title='SmarTranscribe')
