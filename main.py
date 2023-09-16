@@ -1,27 +1,21 @@
-from taipy.gui import Gui
+from taipy.gui import Gui, Html
 from math import cos, exp 
 
-page = """
-#This is *Taipy* GUI 
+page = Html("""
+<h1>Page title</h1>
 
-A value: <|{decay}|>.
+Any <a href="https://en.wikipedia.org/wiki/HTML"><i>HTML</i></a>
+content can be used here.
+""")
 
-A slider: <br/>
-<|{decay}|input|>
+# def print_link(decay):
+#     return [cos(i/16) * exp(-i*decay/6000) for i in range(720)]
 
-My chart: 
-<|{data}|chart|>
-"""
+# def on_change(state, var_name, var_value):
+#     if var_name == 'link':
+#         state.data = print_link(var_value)
 
-def compute_data(decay):
-    return [cos(i/16) * exp(-i*decay/6000) for i in range(720)]
-
-def on_change(state, var_name, var_value):
-    if var_name == 'decay':
-        state.data = compute_data(var_value)
-
-decay = 10
-data = compute_data(decay) 
+#data = print_link(decay) 
 
 Gui(page=page).run(title='SmarTranscribe',
     		       dark_mode=True)
