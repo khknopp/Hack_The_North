@@ -31,6 +31,19 @@
   }
 
   .shadow_fx {
+    position: relative;
+    width: 100%;
+    max-width: 800px; /* Adjust the maximum width as needed */
+    margin: 0 auto;
+    background-image: url('your-background-image.jpg'); /* Replace with your background image URL */
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Box shadow properties */
+    text-align: center;
+    color: black;
+    padding: 20px;
+    border-radius: .4em;
     box-shadow: 0.3em 0.3em 0.7em #00000015;
-    border-radius: .5rem;
+    transition: border 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: #2d2d2d 0.2em solid;
   }

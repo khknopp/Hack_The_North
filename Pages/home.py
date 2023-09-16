@@ -1,31 +1,26 @@
+from taipy.gui import Gui, navigate
 home_md = """
-# Welcome to eye tracking stuff
+# <p style="text-align: center;">Welcome to EyeTracker!</p>
 ---
 
-<style>
-        /* CSS for the image with box shadow */
-        .image-container {
-            width: 300px; /* Adjust the width as needed */
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Box shadow properties */
-        }
-</style>
-    <div class="image-container">
-        <img src="image1.webp" alt="Your Image">
-    </div>
+<center>
+<|{"image1.webp"}|image|height=400px|width=800px|on_action=image_action|class_name="shadow_fx"|>
+</center>
 
-<p>Click the button to display the value of the href attribute of the link above.</p>
+## 
 
-<button onclick="myFunction()">Try it</button>
+<center>
+<a href="http://127.0.0.1:5000/watching"><|Start|button|></a>
+</center>
+
 
 <p id="demo"></p>
 
-<script>
-function myFunction() {
-  var x = document.getElementById("myAnchor").href;
-  document.getElementById("demo").innerHTML = x;
-}
-</script>
 
 
 
 """
+
+def on_menu(state, var_name, function_name, info):
+    page = info['args'][0]
+    navigate(state, to=page)
