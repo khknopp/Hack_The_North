@@ -45,8 +45,12 @@ class get_params:
         print("Added succesfully")
         
         
-    def update_db(self):
+    def update_db(self, conn, link):
         ## GET FROM DB
+        with conn.cursor() as cur:
+            cur.execute("SELECT title,transcription FROM videos WHERE link = %s", (self.link,))
+            data = cur.fetchall()
+            print(data)
         # self.link 
         # self.title         
         # self.transcription 
