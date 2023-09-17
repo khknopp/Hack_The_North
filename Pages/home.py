@@ -1,9 +1,23 @@
+
 home_md = """
-# Welcome to eye tracking stuff
+<h1 style="text-align: center;">Welcome to EyeTracker!</h1>
 ---
-<p><a id="myAnchor" href="https://www.w3schools.com/">W3Schools</a></p>
-
-<p>Click the button to display the value of the href attribute of the link above.</p>
-<p id="demo"></p>
-
+## 
+<|layout|columns=1 2|
+<|
+<center>
+<|{"./llama.jpg"}|image|height=300px|width=300px|>
+</center>
+|>
+<|
+## Get started on your learning journey by pressing start below
+Unlock Your Focus, Master Your Studies: EyeTrackLearn.
+## 
+<a href="watching">
+<button class="custom-btn btn-14 red">Start Now!</button>
+</a>
+|>
+|>
 """
+
+# <a href="watching"><|Start|button|></a>
