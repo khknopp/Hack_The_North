@@ -15,10 +15,15 @@ from psycopg.errors import SerializationFailure, Error
 from psycopg.rows import namedtuple_row
 import pickle as pk
 from db import add_video
+from jinja2 import Environment, BaseLoader
 
+l = [1,2,3,4,5]
 
 load_dotenv()
 
+COHERE_API_KEY = os.getenv('COHERE_API_KEY')
+COCKROACH_USERNAME = os.getenv('COCKROACH_USERNAME')
+COCKROACH_PASSWORD = os.getenv('COCKROACH_PASSWORD')
 
 co = cohere.Client(COHERE_API_KEY)
 db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
@@ -36,9 +41,16 @@ root_md = """
 
 """
 
+s = """
+{% for item in test %}
+    {{item}}
+{% endfor %}
+"""
+rtemplate = Environment(loader=BaseLoader).from_string(s)
+video_md = rtemplate.render(test=l)
         
 #add_video(conn, "9syvZr-9xwk", "This is a summary of the video", ["These are the closed questions"], ["These are the closed answers"], ["These are the open questions"], ["These are the open answers"], "This is the title", "This is the transcript")
-video_md = createMarkdown("https://www.youtube.com/embed/9syvZr-9xwk")
+#video_md = createMarkdown("https://www.youtube.com/embed/9syvZr-9xwk")
 pages = {
     "/": root_md,
     "home": home_md,
