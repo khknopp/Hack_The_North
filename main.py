@@ -25,10 +25,23 @@ import cv2
 
 
 load_dotenv()
-
 COHERE_API_KEY = os.getenv('COHERE_API_KEY')
 COCKROACH_USERNAME = os.getenv('COCKROACH_USERNAME')
 COCKROACH_PASSWORD = os.getenv('COCKROACH_PASSWORD')
+
+db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+
+conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
+
+with conn.cursor() as cur:
+    cur.execute(
+        "DROP table videos"
+    )
+conn.commit()
+
+video = get_params("p2J7wSuFRl8", "Lecture 1 - Philosophy of Death")
+video.add_video(conn)
+video.update_db(conn, "p2J7wSuFRl8")
 
 # co = cohere.Client(COHERE_API_KEY)
 # db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"

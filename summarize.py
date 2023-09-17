@@ -1,4 +1,6 @@
+
 from video_utils import get_fragment
+
 
 from final_summary import replace_less_detailed_sentences
 def summarize_text(co, text):
@@ -39,9 +41,9 @@ def update_summary(co, overall_summary, unfocused_fragments):
 #   highlighted_summary = " ".join(highlighted_summary[0])
 #   overall_summary = " ".join(overall_summary[0])
 
-  print(overall_summary[0])
-  print(highlighted_summary[0])
-  combined_summary, highlight_flags= replace_less_detailed_sentences(overall_summary[0], highlighted_summary[0])
-  print(combined_summary)
+  print(overall_summary)
+  print(highlighted_summary)
+  combined_summary, highlight_flags= replace_less_detailed_sentences(overall_summary, highlighted_summary[0])
+  print("combined summary is :" + str(combined_summary))
 
   return combined_summary, highlight_flags
