@@ -1,6 +1,7 @@
 landingp_md = """
 <h2>Posted videos: </h2>
 <br />
+
 <a href="/watching/video"><div class="video-topic-container">
     <h2>Philosophy: Lesson 1</h2>
 </div></a>
