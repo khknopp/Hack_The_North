@@ -39,7 +39,7 @@ root_md = """
 
         
 #add_video(conn, "9syvZr-9xwk", "This is a summary of the video", ["These are the closed questions"], ["These are the closed answers"], ["These are the open questions"], ["These are the open answers"], "This is the title", "This is the transcript")
-video_md = createMarkdown("https://www.youtube.com/watch?v=9syvZr-9xwk")
+video_md = createMarkdown("https://www.youtube.com/embed/9syvZr-9xwk")
 pages = {
     "/": root_md,
     "home": home_md,
