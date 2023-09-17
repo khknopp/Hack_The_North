@@ -23,7 +23,7 @@ COCKROACH_USERNAME = os.getenv('COCKROACH_USERNAME')
 COCKROACH_PASSWORD = os.getenv('COCKROACH_PASSWORD')
 
 co = cohere.Client(COHERE_API_KEY)
-db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@vortex-jester-5487.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
 
 conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
 
