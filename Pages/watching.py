@@ -1,7 +1,7 @@
 
 watching_md = """
 <center>
-<|menu|label=Menu|lov={[('/watching/philosophy', 'Philosophy'), ('/watching/philosophy', 'History')]}|on_action=on_menu|>
+<|menu|label=Menu|lov={[('/watching/video', 'Philosophy'), ('/watching/video', 'History')]}|on_action=on_menu|>
 </center>
 
 """
