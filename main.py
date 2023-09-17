@@ -1,4 +1,4 @@
-from taipy.gui import Gui, Html, navigate, notify
+from taipy.gui import Gui, Html, navigate, notify, State
 from Pages.about import about_md
 from Pages.home import home_md
 from Pages.watching import watching_md
@@ -6,6 +6,7 @@ from Pages.video import createMarkdown
 from Pages.landingp import landingp_md
 from Pages.landingpt import landingpt_md
 from Pages.landingcs import landingcs_md
+from Pages.quiz import quiz_md
 import time
 from video_utils import *
 from question_generator import *
@@ -25,6 +26,9 @@ import cv2
 
 load_dotenv()
 
+COHERE_API_KEY = os.getenv('COHERE_API_KEY')
+COCKROACH_USERNAME = os.getenv('COCKROACH_USERNAME')
+COCKROACH_PASSWORD = os.getenv('COCKROACH_PASSWORD')
 
 # co = cohere.Client(COHERE_API_KEY)
 # db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
@@ -50,6 +54,7 @@ pages = {
     "home": home_md,
     "about": about_md,
     "watching": watching_md,
+    "watching/quiz": quiz_md,
     "watching/video": video_md,
     "watching/landingp": landingp_md,
     "watching/landingpt": landingpt_md,
@@ -91,7 +96,7 @@ def camera():
 
         if cv2.waitKey(1) == 27:
             break
-    
+
     webcam.release()
     cv2.destroyAllWindows()
 
@@ -102,21 +107,33 @@ if __name__ == "__main__":
 
     urlLink = ""
 
+    questionNum = 0
+    essayAnswer = ""
+
+    lastNotes = "Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!"
+    importantPart = "Brian is here"
+
     allIntervals = []
 
+    data = {
+        "Number": range(1,5),
+        "Question": ["Question 1 goes here", "What do you know about math?", "Proofs", "A"]
+    }
     isLookingAway = False
 
-    
+
     b = threading.Thread(name='background', target=camera)
     b.start()
 
     def startWatching(state):
-        state.seconds = time.time()
+        state.initialOpen = time.time()
+        print(state.initialOpen)
 
     def lookedAway():
-        lookedAwayStart = time.time() - initialOpen
-        isLookingAway = True
-        print("Looked away at " + str(lookedAwayStart))
+        if initialOpen != 0:
+            lookedAwayStart = time.time() - initialOpen
+            isLookingAway = True
+            print("Looked away at " + str(lookedAwayStart))
     def lookedBack():
         if isLookingAway:
             lookedAwayEnd = time.time() - initialOpen
@@ -126,9 +143,18 @@ if __name__ == "__main__":
                 startEndLst = [lookedAwayStart, lookedAwayEnd]
                 allIntervals.append(startEndLst)
 
+    def submitQuiz(state):
+        # Your variables for question num is given by questionNum, essayAnswer
+        # IMPLEMENT Submit answer here
+        return
+
+
     def on_menu(state, var_name, function_name, info):
         page = info['args'][0]
         navigate(state, to=page)
+
+    def debug(state):
+        print(state.allIntervals)
 
     Gui(pages=pages).run(title='NewApp', dark_mode=False)
 

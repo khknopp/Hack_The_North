@@ -4,9 +4,9 @@ about_md = """
 
 EyeTrackLearn is an innovative and trained eye tracking app designed to revolutionize your learning experience. Utilizing advanced eye tracking technology, EyeTrackLearn ensures that you are able to stay focused and engaged with your study materials by detecting when you look away from the screen. It then compiles notes and provides you with quiz questions to test your knowledge on any information you might have missed.
 ## 
-<|{"image1.webp"}|image|height=250px|width=450px|on_action=image_action|>
-<|{"image2.webp"}|image|height=250px|width=250px|on_action=image_action|>
-<|{"image3.png"}|image|height=250px|width=450px|on_action=image_action|>
+<|{"image1.webp"}|image|height=250px|width=450px|>
+<|{"image2.webp"}|image|height=250px|width=250px|>
+<|{"image3.png"}|image|height=250px|width=450px|>
 
 ---
 

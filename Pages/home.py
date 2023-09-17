@@ -14,11 +14,14 @@ home_md = """
 <|
 # Get started on your learning journey.
 ### Unlock Your Focus, Master Your Studies: EyeTrackLearn.
-EyeTrackLearn is a productivity tool that improves a student's ability in learning by helping them understand stuff they might miss in lecture. Feel free to get started by pressing start below.
+EyeTrackLearn is a productivity tool that improves a student's ability in learning by helping them understand stuff 
+they might miss in lecture. **Feel free to get started by pressing** start below!
 ## 
 <a href="watching">
 <|Start Now!|button|class_name="custom-btn btn-14 red"|>
 </a>
 |>
 |>
+
+<|Start Session|button|class_name="custom-btn btn-14 red"|on_action=debug|>
 """
