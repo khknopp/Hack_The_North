@@ -21,4 +21,3 @@ Unlock Your Focus, Master Your Studies: EyeTrackLearn.
 |>
 |>
 """
-
