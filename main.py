@@ -14,22 +14,26 @@ import psycopg
 from psycopg.errors import SerializationFailure, Error
 from psycopg.rows import namedtuple_row
 import pickle as pk
-from db import add_video
+from db import get_params
 from jinja2 import Environment, BaseLoader
 
 l = [1,2,3,4,5]
 
 load_dotenv()
-
 COHERE_API_KEY = os.getenv('COHERE_API_KEY')
 COCKROACH_USERNAME = os.getenv('COCKROACH_USERNAME')
 COCKROACH_PASSWORD = os.getenv('COCKROACH_PASSWORD')
 
 # co = cohere.Client(COHERE_API_KEY)
-# db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+
+conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
+
+video = get_params("p2J7wSuFRl8", "Lecture 1 - Philosophy of Death")
+video.add_video(conn)
 
 
-# conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
+# FRONTEND BELOW
 
 generalNavigation = [("/home", "Home"), ("/about", "About"), ("/watching", "Watching")]
 watchingNavigation = [("/watching/video", "Video"), ("/watching/history", "History")]

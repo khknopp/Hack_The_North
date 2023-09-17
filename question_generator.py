@@ -1,14 +1,15 @@
+
 from summarize import summarize_text
 # import transcription from transcription.py
 
 def generate_questions(co, text, number=5):
   openEndedQuestions = co.generate(
-    prompt="List 5-10 open ended questions based on the following text: " + text,
+    prompt="List 2 open ended questions based on the key concepts of the following text: " + text,
     max_tokens=128
   )
 
   multipleChoiceQuestions = co.generate(
-    prompt='List 5-8 multiple choice questions and the correct answer for each question based on the following text:' + text,
+    prompt='List 2 quick multiple choice questions and a short correct answer for each question based on the key concepts of the following text:' + text,
     max_tokens=300
   )
 
@@ -38,7 +39,7 @@ def check_question(co, question):
   
 def get_questions(co, open, closed):
   open = open[0].split("\n")
-  closed = closed[0].split("\n")
+  closed = [el for el in closed[0].split("\n") if el!=""]
 
   final_open = []
   final_closed = []
@@ -46,14 +47,13 @@ def get_questions(co, open, closed):
   answers_open = []
   
   for question in open:
-    var = check_question(co, question) is not None
+    var = check_question(co, question)
     if(var is not None):
       final_open.append(question)
       answers_open.append(var)
 
   index = 0
-  print(closed)
-  while(index<len(closed)):
+  while(index<len(closed) - 1):
     if(check_question(co, closed[index])):
       final_closed.append(closed[index])
       answers_closed.append(closed[index+1])
@@ -61,24 +61,31 @@ def get_questions(co, open, closed):
   return final_open, final_closed, answers_closed, answers_open
 
 def split_execution(co, whole_text):
-  n = 2000
+  n = 1000
   i = 0
   whole_text = whole_text.split(" ")
   openEndedQuestionsList = []
   multipleChoiceQuestionsList = []
   summaryList = []
 
-
+  
+  print(str(len(whole_text)) + "whole text char count")
   while i*n < len(whole_text):
+    print(str(i) + " value of i at the beginning of the loop")
     if(len(whole_text) - i*n < 400):
+      print("breaking, less than 400 words left")
       break
+    
 
     text = " ".join(whole_text[i*n:(i+1)*n])
     openEndedQuestions, multipleChoiceQuestions = generate_questions(co, text)
-    summaryList.append(summarize_text(co, text))
+    summaryList.extend(summarize_text(co, text))
 
     openEndedQuestionsList.append(openEndedQuestions)
     multipleChoiceQuestionsList.append(multipleChoiceQuestions)
-    i += 1
 
-    return openEndedQuestionsList, multipleChoiceQuestionsList, summaryList
+    print(str(len(summaryList)) + " len of summary list")
+    i += 1
+  return openEndedQuestionsList, multipleChoiceQuestionsList, summaryList
+
+
