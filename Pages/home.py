@@ -2,24 +2,23 @@
 from taipy.gui import Gui, navigate
 
 home_md = """
-# <p style="text-align: center;">Welcome to EyeTracker!</p>
+<h1 style="text-align: center;">Welcome to EyeTracker!</h1>
 ---
-
-<center>
-<|{"image1.webp"}|image|height=400px|width=800px|on_action=image_action|class_name="shadow_fx"|>
-</center>
-
 ## 
-
+<|layout|columns=1 2|
+<|
 <center>
-<a href="watching"><|Start|button|></a>
+<|{"./llama.jpg"}|image|height=300px|width=300px|>
 </center>
-
-
-<p id="demo"></p>
-
-
-
-
+|>
+<|
+## Get started on your learning journey by pressing start below
+Unlock Your Focus, Master Your Studies: EyeTrackLearn.
+## 
+<a href="watching">
+<button class="custom-btn btn-14 red">Start Now!</button>
+</a>
+|>
+|>
 """
 
