@@ -6,5 +6,4 @@ watching_md = """
 </center>
 
 ## <-- To get started choose a course on the side menu
-
 """
