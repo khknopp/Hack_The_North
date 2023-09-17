@@ -6,7 +6,7 @@ def createMarkdown(link):
     \n<center>
     <|Start Session|button|class_name="custom-btn btn-14 red"|on_action=startWatching|>
     <a href = "watching/quiz">
-    <|End Session|button|class_name="custom-btn btn-14 red"|>
+    <|End Session|button|class_name="custom-btn btn-14 red|on_action=startWatching"|>
     </a>
     </center>
     """

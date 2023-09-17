@@ -22,6 +22,4 @@ they might miss in lecture. **Feel free to get started by pressing** start below
 </a>
 |>
 |>
-
-<|Start Session|button|class_name="custom-btn btn-14 red"|on_action=debug|>
 """

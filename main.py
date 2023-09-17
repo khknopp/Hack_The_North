@@ -48,7 +48,7 @@ root_md = """
 
         
 #add_video(conn, "9syvZr-9xwk", "This is a summary of the video", ["These are the closed questions"], ["These are the closed answers"], ["These are the open questions"], ["These are the open answers"], "This is the title", "This is the transcript")
-video_md = createMarkdown("https://www.youtube.com/embed/9syvZr-9xwk")
+video_md = createMarkdown("https://www.youtube.com/embed/p2J7wSuFRl8")
 pages = {
     "/": root_md,
     "home": home_md,
@@ -110,20 +110,54 @@ if __name__ == "__main__":
     questionNum = 0
     essayAnswer = ""
 
-    lastNotes = "Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!Here are some important things to know!"
-    importantPart = "Brian is here"
+    lastNotes = """
+    What is the purpose of a database index, and how does it improve query performance?
+What is object-oriented programming, and how does it differ from procedural programming?
+
+3:16
+Introduction to Computer Science:
+Computer Science 101 is a foundational course that introduces students to the fundamental concepts and principles of computer science.
+Algorithmic Thinking:
+Students learn how to think algorithmically, breaking down problems into step-by-step instructions that a computer can execute.
+Programming Fundamentals:
+The course covers programming basics, including variables, data types, control structures (such as loops and conditionals), and functions.
+Data Structures:
+Students are introduced to fundamental data structures like arrays, lists, stacks, and queues, understanding when and how to use them.
+Basic Algorithms:
+Essential algorithms, such as searching and sorting algorithms, are explored, along with their time and space complexity analysis.
+Problem Solving:
+Computer Science 101 emphasizes problem-solving skills, helping students approach complex issues logically and systematically.
+Computer Architecture:
+Basic computer architecture concepts are introduced, including the CPU, memory, and storage devices.
+Software Development:
+Students gain insights into the software development process, including design, coding, testing, and debugging.
+Web Development (optional):
+Some courses may include an introduction to web development, covering HTML, CSS, and JavaScript.
+Ethical Considerations:
+Ethical and social implications of computer science, including privacy and security, are discussed.
+Real-World Applications:
+Students explore real-world applications of computer science, from creating simple programs to understanding how technology impacts various industries.
+Mathematical Concepts:
+Computer Science 101 often includes mathematical concepts, such as logic, set theory, and basic discrete mathematics, which are essential for algorithm design.
+Programming Languages:
+Exposure to programming languages like Python, Java, or C++ is common, but the emphasis is on understanding core concepts rather than mastering a particular language.
+Hands-On Projects:
+The course typically involves hands-on coding projects and assignments to apply theoretical knowledge to practical problems.
+Preparation for Further Study:
+Computer Science 101 serves as a foundation for more advanced computer science courses, providing students with the skills and knowledge needed to pursue a deeper understanding of the field.
+Computer Science 101 serves as a crucial starting point for anyone interested in computer science, regardless of their background or future career goals. It provides the necessary groundwork for more specialized and advanced studies in the field.
+    """
 
     allIntervals = []
 
     data = {
         "Number": range(1,5),
-        "Question": ["Question 1 goes here", "What do you know about math?", "Proofs", "A"]
+        "Question": ["What is the difference between a compiler and an interpreter in programming languages?", "Explain the Big O concept?", "What is the purpose of a database index, and how does it improve query performance?", "What is object-oriented programming, and how does it differ from procedural programming?"]
     }
     isLookingAway = False
 
-
-    b = threading.Thread(name='background', target=camera)
-    b.start()
+    def endSession(state):
+        print(state.initialOpen)
 
     def startWatching(state):
         state.initialOpen = time.time()
