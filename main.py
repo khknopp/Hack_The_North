@@ -18,16 +18,11 @@ from db import add_video
 
 
 load_dotenv()
-# COHERE_API_KEY = 'yQeQE6Qb9HK8mjAOBxHM9paVtLBgf8Xaokr1RUOP'
-# COCKROACH_USERNAME = 'htn'
-# COCKROACH_PASSWORD = 'X4Vc6r3tQ8jngyPzLGgIdA'
 
-<<<<<<< HEAD
+
 co = cohere.Client(COHERE_API_KEY)
-=======
-# co = cohere.Client(COHERE_API_KEY)
->>>>>>> 8b17a3bc13d855c68efa8c1e27845dd0dc1b3f27
-# db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@vortex-jester-5487.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
+
 
 # conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
 
