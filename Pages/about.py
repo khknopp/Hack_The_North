@@ -1,8 +1,8 @@
 from taipy.gui import Gui, Html
 about_md = """
-# <strong>About us</strong>
+# <strong>About EyeTrackLearn</strong>
 
-EyeTrackLearn is an innovative and trained eye tracking app designed to revolutionize your learning experience. Utilizing advanced eye tracking technology, EyeTrackLearn ensures that you stay focused and engaged with your study materials by detecting when you look away from the screen. It then compiles important notes and provides you with quizzes to test your knowledge on the information you might have missed.
+EyeTrackLearn is an innovative and trained eye tracking app designed to revolutionize your learning experience. Utilizing advanced eye tracking technology, EyeTrackLearn ensures that you are able to stay focused and engaged with your study materials by detecting when you look away from the screen. It then compiles notes and provides you with quiz questions to test your knowledge on any information you might have missed.
 ## 
 <|{"image1.webp"}|image|height=250px|width=450px|on_action=image_action|>
 <|{"image2.webp"}|image|height=250px|width=250px|on_action=image_action|>
@@ -23,16 +23,9 @@ EyeTrackLearn is an innovative and trained eye tracking app designed to revoluti
 
 ## Contact Us
 
-Feel free to [contact us](mailto:info@example.com) for any questions.
+Feel free to contact us for any questions at: hello@eyetracklearn.com
 
 ## 
 
-
-<iframe id="existing-iframe-example"
-        width="640" height="360"
-        src="https://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1"
-        frameborder="0"
-        style="border: solid 4px #37474F"
-></iframe>
 
 """

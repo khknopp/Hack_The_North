@@ -3,6 +3,9 @@ from Pages.about import about_md
 from Pages.home import home_md
 from Pages.watching import watching_md
 from Pages.video import createMarkdown
+from Pages.landingp import landingp_md
+from Pages.landingpt import landingpt_md
+from Pages.landingcs import landingcs_md
 import time
 from video_utils import *
 from question_generator import *
@@ -15,25 +18,19 @@ from psycopg.errors import SerializationFailure, Error
 from psycopg.rows import namedtuple_row
 import pickle as pk
 from db import get_params
-from jinja2 import Environment, BaseLoader
+import threading
+from gaze_tracking import GazeTracking
+import cv2
 
-l = [1,2,3,4,5]
 
 load_dotenv()
-COHERE_API_KEY = os.getenv('COHERE_API_KEY')
-COCKROACH_USERNAME = os.getenv('COCKROACH_USERNAME')
-COCKROACH_PASSWORD = os.getenv('COCKROACH_PASSWORD')
+
 
 # co = cohere.Client(COHERE_API_KEY)
-db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
-
-conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
-
-video = get_params("p2J7wSuFRl8", "Lecture 1 - Philosophy of Death")
-video.add_video(conn)
+# db_url = f"postgresql://{COCKROACH_USERNAME}:{COCKROACH_PASSWORD}@cuter-falcon-5491.g8z.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
 
 
-# FRONTEND BELOW
+# conn = psycopg.connect(db_url, application_name="$ defaultdb", row_factory=namedtuple_row)
 
 generalNavigation = [("/home", "Home"), ("/about", "About"), ("/watching", "Watching")]
 watchingNavigation = [("/watching/video", "Video"), ("/watching/history", "History")]
@@ -45,23 +42,58 @@ root_md = """
 
 """
 
-s = """
-{% for item in test %}
-    {{item}}
-{% endfor %}
-"""
-rtemplate = Environment(loader=BaseLoader).from_string(s)
-video_md = rtemplate.render(test=l)
         
 #add_video(conn, "9syvZr-9xwk", "This is a summary of the video", ["These are the closed questions"], ["These are the closed answers"], ["These are the open questions"], ["These are the open answers"], "This is the title", "This is the transcript")
-#video_md = createMarkdown("https://www.youtube.com/embed/9syvZr-9xwk")
+video_md = createMarkdown("https://www.youtube.com/embed/9syvZr-9xwk")
 pages = {
     "/": root_md,
     "home": home_md,
     "about": about_md,
     "watching": watching_md,
     "watching/video": video_md,
+    "watching/landingp": landingp_md,
+    "watching/landingpt": landingpt_md,
+    "watching/landingcs": landingcs_md
 }
+
+gaze = GazeTracking()
+webcam = cv2.VideoCapture(0)
+
+text = ""
+
+def camera():
+    while True:
+        # We get a new frame from the webcam
+        _, frame = webcam.read()
+
+        # We send this frame to GazeTracking to analyze it
+        gaze.refresh(frame)
+
+        frame = gaze.annotated_frame()
+        text = ""
+
+        new_frame = gaze.annotated_frame()
+        hor = gaze.horizontal_ratio()
+        ver = gaze.vertical_ratio()
+
+        if(hor != None and ver != None):
+            if(hor > 0.9 or ver > 0.9 or ver < 0.1 or hor < 0.1):
+                text = "Not paying attention!"
+                lookedAway()
+            else:
+                text = "Paying attention!"
+                lookedBack()
+
+        cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+
+
+        cv2.imshow("Demo", frame)
+
+        if cv2.waitKey(1) == 27:
+            break
+    
+    webcam.release()
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     initialOpen = 0
@@ -74,19 +106,24 @@ if __name__ == "__main__":
 
     isLookingAway = False
 
+    
+    b = threading.Thread(name='background', target=camera)
+    b.start()
+
     def startWatching(state):
         state.seconds = time.time()
 
-    def lookedAway(state):
-        state.lookedAwayStart = time.time() - initialOpen
-        state.isLookingAway = True
-    def lookedBack(state):
-        if state.isLookingAway:
-            state.lookedAwayEnd = time.time() - initialOpen
+    def lookedAway():
+        lookedAwayStart = time.time() - initialOpen
+        isLookingAway = True
+        print("Looked away at " + str(lookedAwayStart))
+    def lookedBack():
+        if isLookingAway:
+            lookedAwayEnd = time.time() - initialOpen
             # Check if the interval is more than 5 seconds
-            if state.lookedAwayEnd - state.lookedAwayStart >= 5:
+            if lookedAwayEnd - lookedAwayStart >= 5:
                 # Then mark this guy!
-                startEndLst = [state.lookedAwayStart, state.lookedAwayEnd]
+                startEndLst = [lookedAwayStart, lookedAwayEnd]
                 allIntervals.append(startEndLst)
 
     def on_menu(state, var_name, function_name, info):
