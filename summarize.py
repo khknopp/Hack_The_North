@@ -41,7 +41,7 @@ def update_summary(co, overall_summary, unfocused_fragments):
 
   print(overall_summary[0])
   print(highlighted_summary[0])
-  combined_summary = replace_less_detailed_sentences(overall_summary[0], highlighted_summary[0])
+  combined_summary, highlight_flags= replace_less_detailed_sentences(overall_summary[0], highlighted_summary[0])
   print(combined_summary)
 
-  return combined_summary
+  return combined_summary, highlight_flags
