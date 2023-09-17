@@ -14,39 +14,54 @@ load_dotenv()
 COHERE_API_KEY = os.getenv('COHERE_API_KEY')
 co = cohere.Client(COHERE_API_KEY)
 
-def add_video(conn, link, summary, closed_questions, closed_answers, open_questions, open_answers, title, transcription):
-    with conn.cursor() as cur:
-        cur.execute(
-            "CREATE TABLE IF NOT EXISTS videos (link TEXT PRIMARY KEY, summary TEXT, closed_questions TEXT, closed_answers TEXT, open_questions TEXT, open_answers TEXT, title TEXT, transcript TEXT)"
-        )
-        conn.commit()
-        cur.execute(
-            "INSERT INTO videos (link, summary, closed_questions, closed_answers, open_questions, open_answers, title, transcript) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (link, summary, pk.dumps(closed_questions), pk.dumps(closed_answers), pk.dumps(open_questions), pk.dumps(open_answers), title, transcription))
-    conn.commit()
-    print("Added succesfully")
     
 
 class get_params: 
-    def __init__(self, link, summary, closed_questions, closed_answers, open_questions, open_answers, title, transcription):
-        self.link = link 
-        self.summary = summary
-        self.closed_questions = closed_questions
-        self.closed_answers = closed_answers
-        self.open_questions = open_questions
-        self.open_answers = open_answers
+    def __init__(self, link, title):
+        self.link = link
         self.title = title
-        self.transcription = transcription
-    
-    def create_vars(self):
-        video = self.link
-        self.title = "youtube title from api"
-        timestamp_array = [] #GEt from frontend
         
-        self.transcription = run_transcript(video)
-        self.summary = " ".join(summarize_text(co, self.transcription))
-
-        open, closed = split_execution(co, self.transcription)
+        _, self.transcription = run_transcript(self.link)
+        
+        # self.transcription = self.transcription[:15000]
+        open, closed, self.summary = split_execution(co, self.transcription)
+        
+        print(str(len(self.summary)) + "Length of summary after splitexec")
+        print(self.summary)
+        self.summary = " ".join(self.summary)
+        
         self.open_questions, self.closed_questions, self.closed_answers, self.open_answers =  get_questions(co, open, closed)
+
+        
+    def add_video(self, conn):
+        with conn.cursor() as cur:
+            cur.execute(
+                "CREATE TABLE IF NOT EXISTS videos (link TEXT PRIMARY KEY, summary TEXT, closed_questions TEXT, closed_answers TEXT, open_questions TEXT, open_answers TEXT, title TEXT, transcript TEXT)"
+            )
+            conn.commit()
+            cur.execute(
+                "INSERT INTO videos (link, summary, closed_questions, closed_answers, open_questions, open_answers, title, transcript) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)", (self.link, self.summary, pk.dumps(self.closed_questions), pk.dumps(self.closed_answers), pk.dumps(self.open_questions), pk.dumps(self.open_answers), self.title, self.transcription))
+        conn.commit()
+        print("Added succesfully")
+        
+        
+    def update_db(self):
+        ## GET FROM DB
+        # self.link 
+        # self.title         
+        # self.transcription 
+        
+        # create_fragments()
+        
+        
+        open, closed, self.summary = split_execution(co, self.transcription)
+        
+        print(str(len(self.summary)) + "Length after splitexec")
+        self.summary = " ".join(self.summary)
+        
+        self.open_questions, self.closed_questions, self.closed_answers, self.open_answers =  get_questions(co, open, closed)
+        
+        
         
         
         
