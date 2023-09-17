@@ -3,6 +3,9 @@ from Pages.about import about_md
 from Pages.home import home_md
 from Pages.watching import watching_md
 from Pages.video import createMarkdown
+from Pages.landingp import landingp_md
+from Pages.landingpt import landingpt_md
+from Pages.landingcs import landingcs_md
 import time
 from video_utils import *
 from question_generator import *
@@ -45,6 +48,9 @@ pages = {
     "about": about_md,
     "watching": watching_md,
     "watching/video": video_md,
+    "watching/landingp": landingp_md,
+    "watching/landingpt": landingpt_md,
+    "watching/landingcs": landingcs_md
 }
 
 if __name__ == "__main__":
