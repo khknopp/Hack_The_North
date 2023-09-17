@@ -1,10 +1,7 @@
 from dotenv import load_dotenv
-import psycopg
-from psycopg.errors import SerializationFailure, Error
-from psycopg.rows import namedtuple_row
 import pickle as pk
 from question_generator import get_questions, split_execution
-from summarize import create_fragments, summarize_text, update_summary
+from summarize import create_fragments, update_summary
 
 from video_utils import run_transcript
 import os
