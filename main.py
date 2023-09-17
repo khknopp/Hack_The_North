@@ -61,7 +61,19 @@ webcam = cv2.VideoCapture(0)
 
 text = ""
 
+initialOpen = time.time()
+
+isLookingAway = False
+
+initialOpen = 0
+lookedAwayStart = 0
+lookedAwayEnd = 0
+urlLink = ""
+allIntervals = []
+
+
 def camera():
+    global allIntervals
     while True:
         # We get a new frame from the webcam
         _, frame = webcam.read()
@@ -83,6 +95,9 @@ def camera():
             else:
                 text = "Paying attention!"
                 lookedBack()
+        else:
+            text = "Not paying attention!"
+            lookedAway()
 
         cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
 
@@ -92,39 +107,33 @@ def camera():
         if cv2.waitKey(1) == 27:
             break
     
+    print(allIntervals)
     webcam.release()
     cv2.destroyAllWindows()
 
+def lookedAway():
+    global lookedAwayStart
+    global isLookingAway
+    if(isLookingAway == False):
+        lookedAwayStart = time.time() - initialOpen
+    isLookingAway = True
+        
+def lookedBack():
+    global isLookingAway
+    global lookedAwayStart
+    global lookedAwayEnd
+    global allIntervals
+    if isLookingAway == True:
+        lookedAwayEnd = time.time() - initialOpen
+        if lookedAwayEnd - lookedAwayStart >= 3:
+            allIntervals.append([lookedAwayStart, lookedAwayEnd])
+        isLookingAway = False
+
+
 if __name__ == "__main__":
-    initialOpen = 0
-    lookedAwayStart = 0
-    lookedAwayEnd = 0
-
-    urlLink = ""
-
-    allIntervals = []
-
-    isLookingAway = False
-
     
     b = threading.Thread(name='background', target=camera)
     b.start()
-
-    def startWatching(state):
-        state.seconds = time.time()
-
-    def lookedAway():
-        lookedAwayStart = time.time() - initialOpen
-        isLookingAway = True
-        print("Looked away at " + str(lookedAwayStart))
-    def lookedBack():
-        if isLookingAway:
-            lookedAwayEnd = time.time() - initialOpen
-            # Check if the interval is more than 5 seconds
-            if lookedAwayEnd - lookedAwayStart >= 5:
-                # Then mark this guy!
-                startEndLst = [lookedAwayStart, lookedAwayEnd]
-                allIntervals.append(startEndLst)
 
     def on_menu(state, var_name, function_name, info):
         page = info['args'][0]
