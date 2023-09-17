@@ -1,4 +1,6 @@
 
+from taipy.gui import Gui, navigate
+
 home_md = """
 <h1 style="text-align: center;">Welcome to EyeTracker!</h1>
 ---
@@ -19,5 +21,3 @@ Unlock Your Focus, Master Your Studies: EyeTrackLearn.
 |>
 |>
 """
-
-# <a href="watching"><|Start|button|></a>
