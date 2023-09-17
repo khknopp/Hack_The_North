@@ -45,12 +45,26 @@ class get_params:
         print("Added succesfully")
         
         
-    def update_db(self):
+    def update_db(self, conn, link):
         ## GET FROM DB
-        # self.title 
-        # self.transcription_timestamps 
-        # self.boundaries 
-        # self.summary
+        with conn.cursor() as cur:
+            cur.execute("SELECT title,transcription FROM videos WHERE link = %s", (self.link,))
+            data = cur.fetchall()
+            print(data)
+        # self.link 
+        # self.title         
+        # self.transcription 
+        
+        # create_fragments()
+        
+        
+        open, closed, self.summary = split_execution(co, self.transcription)
+        
+        print(str(len(self.summary)) + "Length after splitexec")
+        self.summary = " ".join(self.summary)
+        
+        self.open_questions, self.closed_questions, self.closed_answers, self.open_answers =  get_questions(co, open, closed)
+        
         
         fragments = create_fragments(self.transcription_timestamps, self.boundaries)
         self.summary, self.highlight_flags = update_summary(co, self.summary, fragments)
