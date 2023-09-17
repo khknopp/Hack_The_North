@@ -1,4 +1,9 @@
 def createMarkdown(link):
-    return f"""#Learning geography \n<iframe id="existing-iframe-example" width="640" height="360" src="{link}" frameborder="0" style="border: solid 4px #37474F"></iframe> \n
-    <|{link}|input|>
+    return f"""<h1 style="text-align: center;">Have fun watching!</h1>
+    \n<p align="center">
+    \n<iframe id="existing-iframe-example" width="1080" height="520" src="{link}"frameborder="0" style="border: solid 4px #37474F"></iframe>
+    </p>
+    \n<center>
+    <|End Session|button|class_name="custom-btn btn-14 red"|>
+    </center>
     """
