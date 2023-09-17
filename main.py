@@ -5,7 +5,7 @@ from Pages.watching import watching_md
 from Pages.video import createMarkdown
 import time
 from video_utils import *
-from questionGenerator import *
+from question_generator import *
 from summarize import *
 from dotenv import load_dotenv
 import os
@@ -13,6 +13,8 @@ import cohere
 import psycopg
 from psycopg.errors import SerializationFailure, Error
 from psycopg.rows import namedtuple_row
+import pickle as pk
+from db import add_video
 
 
 load_dotenv()
@@ -35,18 +37,9 @@ root_md = """
 
 """
 
-
-# def add_video(conn, link, summary):
-#     with conn.cursor() as cur:
-#         cur.execute(
-#             "CREATE TABLE IF NOT EXISTS videos (link TEXT PRIMARY KEY, summary TEXT)"
-#         )
-#         cur.execute(
-#             "INSERT INTO videos (link, summary) VALUES (%s, 50), (%s, 1000)", (link, summary))
-#     print("Added succesfully")
         
-# add_video(conn, "https://www.youtube.com/watch?v=9syvZr-9xwk", "This is a summary of the video")
-video_md = createMarkdown("https://www.youtube.com/embed/9syvZr-9xwk")
+#add_video(conn, "9syvZr-9xwk", "This is a summary of the video", ["These are the closed questions"], ["These are the closed answers"], ["These are the open questions"], ["These are the open answers"], "This is the title", "This is the transcript")
+video_md = createMarkdown("https://www.youtube.com/watch?v=9syvZr-9xwk")
 pages = {
     "/": root_md,
     "home": home_md,
@@ -98,7 +91,7 @@ if __name__ == "__main__":
 #separate based on fullstops to get bullet points
 
 #open, closed, summary = split_execution(co, transcript_text)
-#get_questions(co, open, closed)
+#
 
 #fragments = create_fragments(transcript, [[50, 100], [200, 230]])
 #fragments = create_fragments(transcript, [[50, 100], [200, 230], [200, 230]])
@@ -107,3 +100,4 @@ if __name__ == "__main__":
 
 
 #print(all_outputs)
+conn.close()

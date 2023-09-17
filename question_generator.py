@@ -28,12 +28,13 @@ def check_question(co, question):
   )
   answer = answer.generations[0].text
   grader = grader.generations[0].text
+  
   #print(question, answer, grader)
 
   if("Pass" in grader):
-    return True
+    return answer
   else:
-    return False
+    return None 
   
 def get_questions(co, open, closed):
   open = open[0].split("\n")
@@ -42,10 +43,13 @@ def get_questions(co, open, closed):
   final_open = []
   final_closed = []
   answers_closed = []
-
+  answers_open = []
+  
   for question in open:
-    if(check_question(co, question)):
+    var = check_question(co, question) is not None
+    if(var is not None):
       final_open.append(question)
+      answers_open.append(var)
 
   index = 0
   print(closed)
@@ -54,7 +58,7 @@ def get_questions(co, open, closed):
       final_closed.append(closed[index])
       answers_closed.append(closed[index+1])
     index += 2
-  return final_open, final_closed, answers_closed
+  return final_open, final_closed, answers_closed, answers_open
 
 def split_execution(co, whole_text):
   n = 2000
