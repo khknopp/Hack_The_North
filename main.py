@@ -70,7 +70,6 @@ initialOpen = time.time()
 
 isLookingAway = False
 
-initialOpen = 0
 lookedAwayStart = 0
 lookedAwayEnd = 0
 urlLink = ""
@@ -120,6 +119,7 @@ def camera():
 def lookedAway():
     global lookedAwayStart
     global isLookingAway
+    global initialOpen
     if(isLookingAway == False):
         lookedAwayStart = time.time() - initialOpen
     isLookingAway = True
@@ -129,6 +129,7 @@ def lookedBack():
     global lookedAwayStart
     global lookedAwayEnd
     global allIntervals
+    global initialOpen
     if isLookingAway == True:
         lookedAwayEnd = time.time() - initialOpen
         if lookedAwayEnd - lookedAwayStart >= 3:
